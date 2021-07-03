@@ -65,5 +65,8 @@
     /* Advanced Options */
     "skipLibCheck": true,                     /* Skip type checking of declaration files. */
     "forceConsistentCasingInFileNames": false  /* Disallow inconsistently-cased references to the same file. */
+  },
+  "paths": {
+    "geon-engine": "D:/dev/geo/geon/engine",
   }
 }
