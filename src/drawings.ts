@@ -16,9 +16,10 @@ export function drawCircle(ctx: CTX, x: number, y: number, text="Luuk Withagen",
     ctx.beginPath();
     ctx.arc(0,0,size,0,Math.PI*2);
     ctx.fill();
-    ctx.stroke();
+    // ctx.stroke();
 
-    drawText(ctx, Vector2.zero(), text, size);
+    prepareDrawText(ctx, "white", 50)
+    fillMultilineText(ctx, Vector2.zero(), text);
 
     // done drawing
     ctx.restore();
@@ -51,13 +52,16 @@ export function drawLink(ctx: CTX, a: Vector2, b:Vector2, name: string, color: s
     ctx.restore();
 }
 
-export function drawText(ctx: CTX, pos: Vector2, text: string, size: number, max = Infinity, color= "white") {
+export function prepareDrawText(ctx: CTX, color: string, size: number) {
     // set text drawstate
     ctx.fillStyle = color;
     ctx.lineWidth = 0.5;
     ctx.font = `${Math.floor(size*0.4)}px Candara`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
+}
+
+export function fillMultilineText(ctx: CTX, pos: Vector2, text: string) {
 
     // draw multiline
     let lines = text.split('\n');
@@ -70,9 +74,22 @@ export function drawText(ctx: CTX, pos: Vector2, text: string, size: number, max
     for (var i = 0; i < lines.length; i++) {
         ctx.fillText(lines[i], pos.x, pos.y + lineheightstart + (i * lineheight));
     }
-
 }
 
+export function strokeMultilineText(ctx: CTX, pos: Vector2, text: string) {
+
+    // draw multiline
+    let lines = text.split('\n');
+    if (lines.length == 0) {
+        lines.push(text);
+    }
+    const lineheight = 20;
+    const lineheightstart = -((lineheight * (lines.length-1)) / 2)
+    
+    for (var i = 0; i < lines.length; i++) {
+        ctx.strokeText(lines[i], pos.x, pos.y + lineheightstart + (i * lineheight));
+    }
+}
 
 // const SIZE = 100;
 

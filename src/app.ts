@@ -1,8 +1,8 @@
-import { Domain2, InputState, Vector2 } from "geon-engine";
+import { Domain, Domain2, InputState, Vector2 } from "geon-engine";
 import { Random } from "geon-engine/build/math/random";
 import { CtxCamera } from "./ctx/ctx-camera";
 import { CTX, resizeCanvas } from "./ctx/ctx-helpers";
-import { drawCircle, drawLink, drawText } from "./drawings";
+import { drawCircle, drawLink, fillMultilineText, prepareDrawText, strokeMultilineText } from "./drawings";
 
 
 class Groover {
@@ -44,6 +44,14 @@ export class ComboomApp {
     // selection state
     selected?: string = undefined;
 
+    // controls 
+    collapseToCombo = true;
+    stopMoving = false;
+
+    // parameters
+    extPush = 0.5;
+    intPull = 0.1;
+
     protected constructor(
         protected readonly canvas: HTMLCanvasElement,
         protected readonly ctx: CTX,
@@ -77,7 +85,13 @@ export class ComboomApp {
             this.onMouseUp(worldPos);
         }
         this.camera.pos = Vector2.new(-100,-100);
-        this.camera.scale = 5;
+        this.camera.scale = 0.1;
+
+        //@ts-ignore
+        window.setForces = (ext, int) => {
+            this.extPush = ext;
+            this.intPull = int;
+        }
     }
 
     /**
@@ -122,23 +136,45 @@ export class ComboomApp {
      */
     update(dt: number) {
         this.input.preUpdate(dt);
-
+        
         let redraw = this.camera.update(this.input);
         if (redraw) {
             this.redrawAll = true;
         }
 
+        this.updateControls();
+
         // mouse
         this.onMouseMove(this.camera.mousePos);
-        
-        this.updateGroovers();
-        this.updateCombos();
+     
+        if (!this.stopMoving) {
+            this.updateCombos(this.extPush, this.intPull);
+            this.updateGroovers(); 
+        }
 
         this.input.postUpdate();
     }
 
+    updateControls() {
+        if (this.input.IsKeyPressed('enter')) {
+            this.collapseToCombo = !this.collapseToCombo;
+            console.log("collapse", this.collapseToCombo);
+        }
+
+        if (this.input.IsKeyPressed(' ')) {
+            this.stopMoving = !this.stopMoving;
+            console.log("stop", this.stopMoving);
+        }
+        if (this.input.IsKeyPressed('p')) {
+            console.log("logging");
+            for (let c of this.combos.values()) {
+                console.log(c);
+            }
+        }
+    }
+
     updateGroovers() {
-        let desired = 600;
+        let desired = 400;
         let factor = 0.02;
         this.foreachGroover((a, b, combo)=> {
             lerpEdge(a.pos, b.pos, factor, desired);
@@ -146,7 +182,7 @@ export class ComboomApp {
         this.redrawAll = true;
     }
 
-    updateCombos() {
+    updateCombos(externalPush=0.1, internalPull=0.1) {
         
         // get all combo centers
         for (let c of this.combos.values()) {
@@ -159,34 +195,34 @@ export class ComboomApp {
         }
 
         // make this average move away from all other averages
-        // let fac2 = 0.1;
-        // let rng = Random.fromRandom();
-        // for (let combo of this.combos.values()) {
-        //     for (let other of this.combos.values()) {
-        //         if (combo.name == other.name) {
-        //             continue;
-        //         }
-        //         let diff = other.pos.subbed(combo.pos);
-        //         let length = diff.length();
-        //         combo.pos.add(Vector2.fromRandom(rng));
+        for (let combo of this.combos.values()) {
+            for (let other of this.combos.values()) {
+                if (combo.name == other.name) {
+                    continue;
+                }
+                let diff = other.pos.subbed(combo.pos);
+                let length = diff.length();
+                if (length > 3000) {
+                    return;
+                }
+                combo.pos.add(diff.scale(-1 * externalPush * 1/length));
+            }
+        }
 
-        //         combo.pos.copy(combo.pos.scaled(1-fac2).add(other.pos.scaled(fac2)));
-
-        //         // combo.pos.add(diff.scale(strength));
-        //     }
-        // }
+        if (!this.collapseToCombo) {
+            return;
+        }
 
         // make the combo center influence the members
-        let factor = 0.2;
         for (let c of this.combos.values()) {
             for (let m of c.members) {
                 let pos = this.groovers.get(m)!.pos;
-                pos.copy(pos.scaled(1-factor).add(c.pos.scaled(factor)));
+                pos.copy(pos.scaled(1-internalPull).add(c.pos.scaled(internalPull)));
             }
-            // let average = sum.scale(1 / c.members.length);
-            // c.pos.copy(average);
         }
     }
+
+
 
     draw() {
    
@@ -214,8 +250,15 @@ export class ComboomApp {
         }
 
         // draw combos
+        let clamper = Domain.new(4, 15);
         for (let c of this.combos.values()) {
-            drawText(ctx, c.pos, c.name, 25*c.members.length, 300, c.color);
+            let scale = c.members.length;
+            scale = clamper.comform(scale);
+            prepareDrawText(ctx, c.color, Math.min(25 * scale));
+            ctx.strokeStyle = "white";
+            ctx.lineWidth = 0.5 * scale;
+            strokeMultilineText(ctx, c.pos, c.name);
+            // fillMultilineText(ctx, c.pos, c.name);
             // let average = sum.scale(1 / c.members.length);
             // c.pos.copy(average);
         }
@@ -276,25 +319,6 @@ export class ComboomApp {
     }
 }
 
-function test() {
-    let a =  Vector2.new(0,0);
-    let b = Vector2.new(30,40);
-    lerpEdge(a,b);
-    lerpEdge(a,b);
-    lerpEdge(a,b);
-    lerpEdge(a,b);
-    lerpEdge(a,b);
-    console.log(a, b);
-    lerpEdge(a,b);
-    console.log(a, b);
-    lerpEdge(a,b);
-    console.log(a, b);
-    lerpEdge(a,b);
-    console.log(a, b);
-    lerpEdge(a,b);
-
-    console.log(a, b);
-}
 
 function lerpEdge(a: Vector2, b: Vector2, factor=0.5, desired= 100) {
     

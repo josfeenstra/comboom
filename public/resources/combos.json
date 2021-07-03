@@ -26,7 +26,6 @@
                 "Karan Kohabir",
                 "Ewoud van Munster",
                 "Marjolein Kippers", "Marthe Meskers", "Bart Kroese",
-                "Jasper Nunninga",
                 "Laurens Buijs", "Chris Wouters", "Jurrian Govers", "Joost Schoonhoven", "Sjoerd van den Bosch", "Martijn Ytsma", "Arthur van Dijk",
                 "Rachel Los", "Guy Versluys", "Rosa Haersbach", "Tim Wilmes",
                 "Catóoow"
@@ -109,8 +108,6 @@
                 "Julian Kaihatu",
                 "Jungmin Yoon",
                 "Jurgen Kuipers",
-                "Kate Loe",
-                "Liset Vliegen",
                 "Lucas Geerts",
                 "Lucien Erdin",
                 "Maarten Verheij ",
@@ -343,7 +340,7 @@
             "color": "hsl(100, 100%, 50%)",
             "members": [
                 "Mischa de Haan",
-                "Richard Coesoy",
+                "Richard Cousoij",
                 "Stijn van der Smagt",
                 "Stijn Lindeman",
                 "Sebas Joosten",
@@ -356,12 +353,6 @@
             "members": [
                 "Kim van Eekelen",
                 "Oskar Zakrzewski"
-            ]
-        },
-        {
-            "name": "June",
-            "color": "hsl(120, 100%, 50%)",
-            "members": [
             ]
         }
     ]
