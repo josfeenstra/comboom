@@ -1,4 +1,5 @@
 import { Vector2 } from "geon-engine";
+import { CtxCamera } from "./ctx/ctx-camera";
 import { CTX } from "./ctx/ctx-helpers";
 
 export function drawCircle(ctx: CTX, x: number, y: number, text="Luuk Withagen", size=50) {
@@ -50,16 +51,19 @@ export function drawLink(ctx: CTX, a: Vector2, b:Vector2, name: string, color: s
     ctx.restore();
 }
 
-function drawText(ctx: CTX, pos: Vector2, text: string, size: number, max = Infinity) {
+export function drawText(ctx: CTX, pos: Vector2, text: string, size: number, max = Infinity, color= "white") {
     // set text drawstate
-    ctx.fillStyle = "white";
+    ctx.fillStyle = color;
     ctx.lineWidth = 0.5;
-    ctx.font = `${Math.floor(size*0.4)}px courier new`;
+    ctx.font = `${Math.floor(size*0.4)}px Candara`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
 
     // draw multiline
     let lines = text.split('\n');
+    if (lines.length == 0) {
+        lines.push(text);
+    }
     const lineheight = 20;
     const lineheightstart = -((lineheight * (lines.length-1)) / 2)
     
@@ -68,3 +72,54 @@ function drawText(ctx: CTX, pos: Vector2, text: string, size: number, max = Infi
     }
 
 }
+
+
+// const SIZE = 100;
+
+// export function drawGrid(ctx: CTX, camera: CtxCamera) {
+ 
+//     let cross = (x: number, y: number, s: number) => {
+//         ctx.moveTo(x, y-s);
+//         ctx.lineTo(x, y+s);
+//         ctx.moveTo(x-s, y);
+//         ctx.lineTo(x+s, y);
+//     }
+
+//     let box = camera.getBox();
+//     let size = SIZE;
+//     let crosssize = size/20;
+//     let topleft = Vector2.new(box.x.t0, box.y.t0);
+//     let gridStart = toWorld(toGrid(topleft, size), size);
+
+//     ctx.save();
+//     ctx.fillStyle = '#111111';
+//     ctx.lineWidth = 4;
+//     ctx.beginPath();
+
+//     for (let x = gridStart.x; x < box.x.t1; x += size) {
+//         for (let y = gridStart.y; y < box.y.t1; y += size) {
+            
+            
+//             // ctx.fillRect(x,y,1,1);
+//             // ctx.arc(x,y,1, 0, Math.PI*2);
+//             /// ctx.fill();
+
+//             ctx.moveTo(x,y);
+//             cross(x, y, crosssize);
+//         }
+//     }
+
+//     ctx.stroke();
+//     ctx.restore();
+// }
+
+// function toGrid(wv: Vector2, size: number) {
+//     return Vector2.new(
+//         Math.round((wv.x - (size/2)) / size),
+//         Math.round((wv.y - (size/2)) / size)
+//     )
+// }
+
+// function toWorld(gv: Vector2, size: number) {
+//     return gv.scaled(size);
+// }

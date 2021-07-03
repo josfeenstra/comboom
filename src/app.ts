@@ -2,7 +2,7 @@ import { Domain2, InputState, Vector2 } from "geon-engine";
 import { Random } from "geon-engine/build/math/random";
 import { CtxCamera } from "./ctx/ctx-camera";
 import { CTX, resizeCanvas } from "./ctx/ctx-helpers";
-import { drawCircle, drawLink } from "./drawings";
+import { drawCircle, drawLink, drawText } from "./drawings";
 
 
 class Groover {
@@ -23,10 +23,12 @@ class Combo {
         public name: string,
         public members: string[],
         public color: string,
+        public pos: Vector2,
+        public vector: Vector2,
         ) {}
 
     static new(name: string, members: string[], color: string) {
-        return new Combo(name, members, color);
+        return new Combo(name, members, color, Vector2.zero(), Vector2.zero());
     }
 }
 
@@ -74,6 +76,8 @@ export class ComboomApp {
         this.camera.onMouseUp = (worldPos: Vector2) => {
             this.onMouseUp(worldPos);
         }
+        this.camera.pos = Vector2.new(-100,-100);
+        this.camera.scale = 5;
     }
 
     /**
@@ -128,28 +132,60 @@ export class ComboomApp {
         this.onMouseMove(this.camera.mousePos);
         
         this.updateGroovers();
+        this.updateCombos();
 
         this.input.postUpdate();
     }
 
     updateGroovers() {
-        let desired = 300;
-        let factor = 0.01;
+        let desired = 600;
+        let factor = 0.02;
         this.foreachGroover((a, b, combo)=> {
-
-            lerpEdge(a.pos, b.pos, 0.01, desired);
-
-            // let distance = a.pos.disTo(b.pos);
-            // let vector = b.pos.subbed(a.pos);
-            // let center = a.pos.added(vector.scaled(0.5));
-
-            // let aCorrect = center.added(vector.normalized().scale(desired * 0.5));
-            // let bCorrect = center.added(vector.normalized().scale(desired *-0.5));
-
-            // a.pos = a.pos.lerp(aCorrect, factor);
-            // b.pos = a.pos.lerp(bCorrect, factor);
+            lerpEdge(a.pos, b.pos, factor, desired);
         })
         this.redrawAll = true;
+    }
+
+    updateCombos() {
+        
+        // get all combo centers
+        for (let c of this.combos.values()) {
+            let sum = Vector2.new();
+            for (let m of c.members) {
+                sum.add(this.groovers.get(m)!.pos);
+            }
+            let average = sum.scale(1 / c.members.length);
+            c.pos.copy(average);
+        }
+
+        // make this average move away from all other averages
+        // let fac2 = 0.1;
+        // let rng = Random.fromRandom();
+        // for (let combo of this.combos.values()) {
+        //     for (let other of this.combos.values()) {
+        //         if (combo.name == other.name) {
+        //             continue;
+        //         }
+        //         let diff = other.pos.subbed(combo.pos);
+        //         let length = diff.length();
+        //         combo.pos.add(Vector2.fromRandom(rng));
+
+        //         combo.pos.copy(combo.pos.scaled(1-fac2).add(other.pos.scaled(fac2)));
+
+        //         // combo.pos.add(diff.scale(strength));
+        //     }
+        // }
+
+        // make the combo center influence the members
+        let factor = 0.2;
+        for (let c of this.combos.values()) {
+            for (let m of c.members) {
+                let pos = this.groovers.get(m)!.pos;
+                pos.copy(pos.scaled(1-factor).add(c.pos.scaled(factor)));
+            }
+            // let average = sum.scale(1 / c.members.length);
+            // c.pos.copy(average);
+        }
     }
 
     draw() {
@@ -173,10 +209,16 @@ export class ComboomApp {
         })
 
         // draw circles
-        for (let c of this.groovers.values()) {
-            drawCircle(ctx, c.pos.x, c.pos.y, c.name.replace(" ", '\n'));
+        for (let g of this.groovers.values()) {
+            drawCircle(ctx, g.pos.x, g.pos.y, g.name.replace(" ", '\n'));
         }
 
+        // draw combos
+        for (let c of this.combos.values()) {
+            drawText(ctx, c.pos, c.name, 25*c.members.length, 300, c.color);
+            // let average = sum.scale(1 / c.members.length);
+            // c.pos.copy(average);
+        }
         // done making drawings
         ctx.restore();
     }
@@ -199,7 +241,7 @@ export class ComboomApp {
 
     onMouseDown(worldPos: Vector2) {
         for (let g of this.groovers.values()) {
-            if (worldPos.disTo(g.pos) < 100) {
+            if (worldPos.disTo(g.pos) < 80) {
                 this.selected = g.name; 
                 return;
             }

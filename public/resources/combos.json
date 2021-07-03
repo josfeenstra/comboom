@@ -26,7 +26,7 @@
                 "Karan Kohabir",
                 "Ewoud van Munster",
                 "Marjolein Kippers", "Marthe Meskers", "Bart Kroese",
-                "Jasper Nuninga",
+                "Jasper Nunninga",
                 "Laurens Buijs", "Chris Wouters", "Jurrian Govers", "Joost Schoonhoven", "Sjoerd van den Bosch", "Martijn Ytsma", "Arthur van Dijk",
                 "Rachel Los", "Guy Versluys", "Rosa Haersbach", "Tim Wilmes",
                 "Catóoow"
@@ -124,7 +124,7 @@
                 "Robbie de Groot",
                 "Romi Kharisnawan",
                 "Roos te Velde",
-                "Rosa Hersbach",
+                "Rosa Haersbach",
                 "Rudy de Lange",
                 "Saskia Monen",
                 "Savanne van Harrewijen",
@@ -140,7 +140,7 @@
             ]
         },
         {
-            "name": "Count Bases",
+            "name": "Count Basess",
             "color":"hsl(10, 100%, 50%)",
             "members": [
                 "Claire Verviers",
@@ -156,7 +156,7 @@
             "name": "Crisp",
             "color":"hsl(100, 100%, 50%)",
             "members": [
-                "Naomi Binnekamp",
+                "Naomi Binnenkamp",
                 "Davey van Giesen",
                 "Sebas Joosten",
                 "Gerran Lankhorst",
@@ -185,7 +185,7 @@
             "color": "hsl(280, 100%, 50%)",
             "members": [
                 "Sebas Joosten",
-                "Gerran  Lankhorst",
+                "Gerran Lankhorst",
                 "Nanne Aben"
             ]
         },
@@ -262,7 +262,7 @@
             "members": [
                 "Kris Ransijn",
                 "Lars Hoogland",
-                "Luuk withagen"
+                "Luuk Withagen"
             ]
         },
         {
@@ -293,9 +293,6 @@
                 "Ingo Nettersheim"
             ]
         },
-
-
-
         {
             "name": "Scotch, Wine & Water",
             "color": "darkred",
@@ -307,15 +304,64 @@
                 "Stijn van den Elshout"
             ]
         },
-
-
-
         {
-            "name": "Two Souls",
+            "name": "The Sidewinders",
+            "color": "hsl(40, 100%, 50%)",
+            "members": [
+                "Jesse Salet",
+                "Moos Meijer",
+                "Tobias Roest",
+                "Dennis van Veen"
+            ]
+        },
+        {
+            "name": "Strijkers",
+            "color": "hsl(60, 100%, 50%)",
+            "members": [
+                "Renée Dooren",
+                "Naomi Binnenkamp",
+                "Mala Dengkeng",
+                "Halana Vlaming",
+                "Amanda van der Sijs",
+                "julia Stoevelaar",
+                "Marije Deul"
+            ]
+        },
+        {
+            "name": "Van Gasteren Quintet",
+            "color": "hsl(80, 100%, 50%)",
+            "members": [
+                "Gijs van Gasteren",
+                "Pim America",
+                "William Hunter",
+                "Joep Knepper",
+                "Lars Hoogland"
+            ]
+        },
+        {
+            "name": "Wakki",
+            "color": "hsl(100, 100%, 50%)",
+            "members": [
+                "Mischa de Haan",
+                "Richard Coesoy",
+                "Stijn van der Smagt",
+                "Stijn Lindeman",
+                "Sebas Joosten",
+                "Laurens Buijs"
+            ]
+        },
+        {
+            "name": "2Souls",
             "color": "yellow",
             "members": [
                 "Kim van Eekelen",
                 "Oskar Zakrzewski"
+            ]
+        },
+        {
+            "name": "June",
+            "color": "hsl(120, 100%, 50%)",
+            "members": [
             ]
         }
     ]
