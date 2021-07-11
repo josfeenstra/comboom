@@ -1,7 +1,7 @@
 
 // shorthands
-export type CTX = CanvasRenderingContext2D; 
-export type Canvas = HTMLCanvasElement;
+export type CTX = CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D; 
+export type Canvas = HTMLCanvasElement | OffscreenCanvas;
 
 // for resizing
 export function resizeCanvas(ctx: CTX) {
