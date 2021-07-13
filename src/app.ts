@@ -11,6 +11,11 @@ import {
 	strokeMultilineText,
 } from "./drawings";
 
+export let EXPAND_AGRESSION = 5000;
+
+// @ts-ignore
+window.setExpandAggression = (v: number) => EXPAND_AGRESSION = v;
+
 export class Groover {
 	constructor(
 		public pos: Vector2,
@@ -55,10 +60,6 @@ export class ComboomApp {
 	collapseToCombo = true;
 	stopMoving = false;
 
-	// parameters
-	extPush = 0.5;
-	intPull = 0.1;
-
 	protected constructor(
 		protected readonly canvas: HTMLCanvasElement,
 		protected readonly ctx: CTX,
@@ -91,13 +92,7 @@ export class ComboomApp {
 			this.onMouseUp(worldPos);
 		};
 		this.camera.pos = Vector2.new(this.canvas.width * -0.5, this.canvas.height * -0.5);
-		this.camera.scale = 0.5;
-
-		//@ts-ignore
-		window.setForces = (ext, int) => {
-			this.extPush = ext;
-			this.intPull = int;
-		};
+		this.camera.scale = 0.4;
 	}
 
 	/**
@@ -138,9 +133,12 @@ export class ComboomApp {
 	 * NOTE: this is sort of the main loop of the whole node canvas
 	 * @param dt
 	 */
+	ticks = 0;
 	update(dt: number) {
-		this.input.preUpdate(dt);
+		
 
+		
+		this.input.preUpdate(dt);
 		let redraw = this.camera.update(this.input);
 		if (redraw) {
 			this.redrawAll = true;
@@ -153,11 +151,20 @@ export class ComboomApp {
 
 		if (!this.stopMoving) {
 			this.updateGroovers();
-            this.updateCombos(this.extPush, this.intPull);
+            this.updateGrooversAndCombos();
             this.redrawAll = true;
 		}
 
 		this.input.postUpdate();
+
+		// automatically collapse after a while
+		this.ticks += 1;
+		if (this.ticks > 100) {
+			this.ticks = -100000000;
+			EXPAND_AGRESSION = 1000;
+			this.collapseToCombo = false;
+		}
+		this.redrawAll = true;
 	}
 
 	updateControls() {
@@ -220,11 +227,15 @@ export class ComboomApp {
 		let desired = 400;
 		let factor = 0.02;
 		this.foreachGroover((a, b, combo) => {
+            if (combo)
 			lerpEdge(a.pos, b.pos, factor, desired);
 		});
 	}
 
-	updateCombos(externalPush = 0.1, internalPull = 0.1) {
+	updateGrooversAndCombos(internalPull = 0.1) {
+		
+		const falloff = Domain.new(500, 600);
+		
 		// get all combo centers
 		for (let c of this.combos.values()) {
 			let sum = Vector2.new();
@@ -235,43 +246,56 @@ export class ComboomApp {
 			c.pos.copy(average);
 		}
 
-		// make this average move away from all other averages
-		// for (let combo of this.combos.values()) {
-		// 	for (let other of this.combos.values()) {
-		// 		if (combo.name == other.name) {
-		// 			continue;
-		// 		}
-		// 		let diff = other.pos.subbed(combo.pos);
-		// 		let length = diff.length();
-		// 		if (length > 3000) {
-		// 			return;
-		// 		}
-		// 		combo.pos.add(diff.scale((-1 * externalPush * 1) / length));
-		// 	}
-		// }
+		if (!this.collapseToCombo) {
+			return
+		} else {
+			// make combos themselves move away from each other
+			for (let combo of this.combos.values()) {
+				let force = Vector2.new(0,0);
+				let minLength = Infinity;
+				for (let other of this.combos.values()) {
+					if (combo.name == other.name) {
+						continue;
+					}
 
-		// if (!this.collapseToCombo) {
-		// 	return;
-		// }
+					let size = combo.members.length;
+					let diff = other.pos.subbed(combo.pos);
+					let length = diff.length();
+					if (length < minLength) {
+						minLength = length;
+					}
+					
+					force.add(diff.normalize().scale(-1 * EXPAND_AGRESSION * (1 / length)));
+				}
 
-		// make the combo center influence the members
-		for (let c of this.combos.values()) {
-			for (let m of c.members) {
-				let pos = this.groovers.get(m)!.pos;
-                if (!pos) {
-                    console.log("no pos...")
-                }
-				pos.copy(pos.scaled(1 - internalPull).add(c.pos.scaled(internalPull)));
+				
+				if (minLength > falloff.t0) {
+					let factor = Math.max(0, 1 - falloff.normalize(minLength));
+					force.scale(factor);
+				}
+				combo.pos.add(force);
+			}
+
+			// make the combo center influence the members
+			for (let c of this.combos.values()) {
+				for (let m of c.members) {
+					let pos = this.groovers.get(m)!.pos;
+					pos.copy(pos.scaled(1 - internalPull).add(c.pos.scaled(internalPull)));
+				}
 			}
 		}
+
+
 	}
 
-	draw(ctx = this.ctx) {
+	draw(ctx: CTX = this.ctx) {
+
 		// redraw everything if we moved the camera, for example
 		if (!this.redrawAll) {
 			return;
 		}
-		this.redrawAll = false;
+	
+		console.log("lalal")
 
 		// prepare drawings
 		let camera = this.camera;

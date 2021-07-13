@@ -9,7 +9,7 @@ export function drawCircle(ctx: CTX, x: number, y: number, text = "Luuk Withagen
 	// ctx.translate(x,y);
 
 	// set stroke style
-	ctx.fillStyle = "black";
+	ctx.fillStyle = "#160f1d";
 	ctx.strokeStyle = "white";
 	ctx.lineWidth = 3;
 

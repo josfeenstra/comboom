@@ -25,7 +25,7 @@ async function main() {
         acc_time = elapsed_time;
 
         counter._update(delta_time);
-        document.title = "fps: " + counter.getFps();
+        // document.title = "fps: " + counter.getFps();
 
         comboom.update(delta_time);
         comboom.draw();
