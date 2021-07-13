@@ -294,8 +294,6 @@ export class ComboomApp {
 		if (!this.redrawAll) {
 			return;
 		}
-	
-		console.log("lalal")
 
 		// prepare drawings
 		let camera = this.camera;
