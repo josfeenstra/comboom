@@ -1,8 +1,31 @@
 {
     "combos": [
         {
+            "name": "Kroese Kwartet",
+            "color":"darkgreen",
+            "members": ["Bart Kroese","Tuhin Das","Cas Jiskoot","Laurens Buijs"]
+        },
+        {
+            "name": "[Beun Brass Band]",
+            "color": "blue",
+            "members": [
+                "Bart Kroese",
+                "Luuk eeftink",
+                "Tristan lievestro",
+                "Gijs Vis",
+                "Laurens Buijs",
+                "Marjolein Kippers",
+                "Allard van Engelenhoven",
+                "Huib baets",
+                "Jasper van rosendaal",
+                "Lucas Norder",
+                "Maarten mens"
+            ],
+            "status": "unofficial"
+        },
+        {
             "name": "Van Stralen Quintet",
-            "color": "yellow",
+            "color": "lavender",
             "members": [
                 "Luuk Withagen", "Lars Hoogland", "Elbrich van Stralen", "Kris Ransijn", "Luuk Eeftink"
             ]
@@ -10,6 +33,7 @@
         {
             "name": "Groover Big Band",
             "color": "hsl(330, 100%, 50%)",
+            "status": "veco",
             "NOTE": "dit zijn alle leden van laatste 5 jaar",
             "members": [
                 "Niels van Willigen",
@@ -34,8 +58,9 @@
                 "Ewoud van Munster",
                 "Marjolein Kippers", "Marthe Meskers", "Bart Kroese",
                 "Laurens Buijs", "Chris Wouters", "Jurrian Govers", "Joost Schoonhoven", "Sjoerd van den Bosch", "Martijn Ytsma", "Arthur van Dijk",
-                "Rachel Los", "Guy Versluys", "Rosa Haersbach", "Tim Wilmes",
-                "Catóoow"
+                "Rachel Los", "Rosa Haersbach", "Tim Wilmes",
+                "Catóoow",
+                "Bas Biesheuvel"
             ]
         },
         {
@@ -205,7 +230,8 @@
                 "Linda Supheert",
                 "Annemiek Wigger",
                 "Linda Supheert",
-                "Doris van Hooijdonk"
+                "Doris van Hooijdonk",
+                "Naomi Binnenkamp"
             ]
         },
         {

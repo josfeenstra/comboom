@@ -205,11 +205,16 @@ export class ComboomApp {
 
 	async makeScreenshot(width = 1920, height = 1080) {
 		try {
+			let orSize = Vector2.new(this.canvas.width, this.canvas.height);
+			let size = Vector2.new(width, height);
 			// setup a new canvas off screen, and render with it
 			let off = new OffscreenCanvas(width, height);
 			let ctx = off.getContext("2d")!;
 			this.redrawAll = true;
+			
+			// this.rescale(orSize, size);
 			this.draw(ctx);
+			// this.rescale(size, orSize);
 
 			// download the result
 			let blob = await ctx.canvas.convertToBlob();
@@ -286,6 +291,26 @@ export class ComboomApp {
 		}
 
 
+	}
+
+	rescale(from: Vector2, to: Vector2) {
+	
+		let scalarX = to.x / from.x;
+		let scalarY = to.y / from.y;
+		let scalar = Vector2.new(scalarX, scalarY);
+
+		// rescale all positions to a new window
+		for (let g of this.groovers.values()) {
+			g.pos.mul(scalar);
+			// g.pos.x = (g.pos.x / from.x) * to.x;
+			// g.pos.y = (g.pos.y / from.y) * to.y;  
+		}
+
+		for (let c of this.combos.values()) {
+			c.pos.mul(scalar);
+			// c.pos.x = (c.pos.x / from.x) * to.x;
+			// c.pos.y = (c.pos.y / from.y) * to.y;
+		}
 	}
 
 	draw(ctx: CTX = this.ctx) {
