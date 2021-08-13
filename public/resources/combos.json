@@ -1,6 +1,13 @@
 {
     "combos": [
         {
+            "name": "Van Stralen Quintet"
+            "color": "yellow",
+            "members": [
+                "Luuk Withagen", "Lars Hoogland", "Elbrich van Stralen", "Kris Ransijn", "Luuk Eeftink"
+            ]
+        },
+        {
             "name": "Groover Big Band",
             "color": "hsl(330, 100%, 50%)",
             "NOTE": "dit zijn alle leden van laatste 5 jaar",
