@@ -29,18 +29,25 @@ export class Groover {
 	}
 }
 
+export enum ComboType {
+	VeCo,
+	Combo,
+	Bootleg
+}
+
 //
 export class Combo {
 	constructor(
 		public name: string,
+		public type: ComboType,
 		public members: string[],
 		public color: string,
 		public pos: Vector2,
 		public vector: Vector2
 	) {}
 
-	static new(name: string, members: string[], color: string) {
-		return new Combo(name, members, color, Vector2.zero(), Vector2.zero());
+	static new(name: string, type: ComboType, members: string[], color: string) {
+		return new Combo(name, type, members, color, Vector2.zero(), Vector2.zero());
 	}
 }
 
@@ -102,10 +109,9 @@ export class ComboomApp {
 	load(json: any) {
 		let area = Domain2.fromRadii(this.canvas.width, this.canvas.height);
 		let rng = Random.fromRandom();
-		// let cs = this.combos;
-
-		for (let combo of json.combos) {
-			this.combos.set(combo.name, Combo.new(combo.name, combo.members, combo.color));
+	
+		let enlistCombo = (combo: any, type: ComboType) => {
+			this.combos.set(combo.name, Combo.new(combo.name, type, combo.members, combo.color));
 
 			for (let name of combo.members) {
 				let vec = area.elevate(Vector2.fromRandom(rng));
@@ -126,7 +132,15 @@ export class ComboomApp {
 			}
 		}
 
-		// this.updateGroovers();
+		for (let combo of json.vecos) {
+			enlistCombo(combo, ComboType.VeCo);
+		}
+		for (let combo of json.combos) {
+			enlistCombo(combo, ComboType.Combo);
+		}
+		// for (let combo of json.unofficial) {
+		// 	enlistCombo(combo, ComboType.Bootleg);
+		// }
 	}
 
 	/**

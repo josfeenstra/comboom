@@ -1,35 +1,5 @@
 {
-    "combos": [
-        {
-            "name": "Kroese Kwartet",
-            "color":"darkgreen",
-            "members": ["Bart Kroese","Tuhin Das","Cas Jiskoot","Laurens Buijs"]
-        },
-        {
-            "name": "[Beun Brass Band]",
-            "color": "blue",
-            "members": [
-                "Bart Kroese",
-                "Luuk eeftink",
-                "Tristan lievestro",
-                "Gijs Vis",
-                "Laurens Buijs",
-                "Marjolein Kippers",
-                "Allard van Engelenhoven",
-                "Huib baets",
-                "Jasper van rosendaal",
-                "Lucas Norder",
-                "Maarten mens"
-            ],
-            "status": "unofficial"
-        },
-        {
-            "name": "Van Stralen Quintet",
-            "color": "lavender",
-            "members": [
-                "Luuk Withagen", "Lars Hoogland", "Elbrich van Stralen", "Kris Ransijn", "Luuk Eeftink"
-            ]
-        },
+    "vecos": [
         {
             "name": "Groover Big Band",
             "color": "hsl(330, 100%, 50%)",
@@ -61,26 +31,6 @@
                 "Rachel Los", "Rosa Haersbach", "Tim Wilmes",
                 "Catóoow",
                 "Bas Biesheuvel"
-            ]
-        },
-        {
-            "name": "Capital S",
-            "color": "hsl(290, 100%, 50%)",
-            "members": [
-                "Luca van de Knaap",
-                "Kim van Eekelen",
-                "Tanna Manrique-de Kam",
-                "Bas Rosenboom",
-                "Rabin Iseger",
-                "Floris Bruinsma",
-                "Tessa Lievestro",
-                "Mats Dirkzwager",
-                "Richard Cousoij",
-                "Jochem van der Zaag",
-                "yann Rosema",
-                "Oskar Zakrzewski",
-                "Peter Mulders",
-                "Sofie Jansser"
             ]
         },
         {
@@ -167,6 +117,50 @@
                 "Zach Burr",
                 "Zhongtian Li"
             ]
+        }
+    ],
+    "combos": [
+        {
+            "name": "Kroese Kwartet",
+            "color":"darkgreen",
+            "members": [
+                "Bart Kroese",
+                "Tuhin Das",
+                "Cas Jiskoot",
+                "Laurens Buijs"
+            ]
+        },
+        {
+            "name": "Van Stralen Quintet",
+            "color": "lavender",
+            "members": [
+                "Luuk Withagen", 
+                "Lars Hoogland", 
+                "Elbrich van Stralen", 
+                "Kris Ransijn", 
+                "Luuk Eeftink"
+            ]
+        },
+        {
+            "name": "Capital S",
+            "color": "hsl(290, 100%, 50%)",
+            "members": [
+                "Luca van de Knaap",
+                "Kim van Eekelen",
+                "Tanna Manrique-de Kam",
+                "Bas Rosenboom",
+                "Rabin Iseger",
+                "Floris Bruinsma",
+                "Tessa Lievestro",
+                "Mats Dirkzwager",
+                "Richard Cousoij",
+                "Jochem van der Zaag",
+                "yann Rosema",
+                "Oskar Zakrzewski",
+                "Peter Mulders",
+                "Sofie Jansser",
+                "Daniel Zhuk"
+            ]
         },
         {
             "name": "Count Basess",
@@ -231,7 +225,8 @@
                 "Annemiek Wigger",
                 "Linda Supheert",
                 "Doris van Hooijdonk",
-                "Naomi Binnenkamp"
+                "Naomi Binnenkamp",
+                "Daniel Zhuk"
             ]
         },
         {
@@ -255,14 +250,18 @@
             "name": "Haex trio",
             "color": "hsl(200, 100%, 50%)",
             "members": [
-                "Thomas Haex", "Casper Hügel", "Sebas Joosten"
+                "Thomas Haex", 
+                "Casper Hügel", 
+                "Sebas Joosten"
             ]
         },
         {
             "name": "Heemels Trio",
             "color": "hsl(90, 100%, 50%)",
             "members": [
-                "Stijn van den Elshout", "Gijs van Gasteren", "Alexander Heemels"
+                "Stijn van den Elshout", 
+                "Gijs van Gasteren", 
+                "Alexander Heemels"
             ]
         },
         {
@@ -276,7 +275,10 @@
             "name": "Hoogland Quartet",
             "color": "hsl(150, 100%, 50%)",
             "members": [
-                "Lars Hoogland", "Luuk Withagen", "Paula Goldebeld", "Joost Schoonhoven"
+                "Lars Hoogland", 
+                "Luuk Withagen", 
+                "Paula Goldebeld", 
+                "Joost Schoonhoven"
             ]
         },
         {
@@ -359,7 +361,7 @@
         },
         {
             "name": "Van Gasteren Quintet",
-            "color": "hsl(80, 100%, 50%)",
+            "color": "hsl(20, 100%, 50%)",
             "members": [
                 "Gijs van Gasteren",
                 "Pim America",
@@ -388,6 +390,39 @@
                 "Oskar Zakrzewski"
             ]
         }
+    ],
+    "unofficial": [
+        {
+            "name": "Beun Brass Band'",
+            "color": "blue",
+            "members": [
+                "Bart Kroese",
+                "Luuk eeftink",
+                "Tristan lievestro",
+                "Gijs Vis",
+                "Laurens Buijs",
+                "Marjolein Kippers",
+                "Allard van Engelenhoven",
+                "Huib baets",
+                "Jasper van rosendaal",
+                "Lucas Norder",
+                "Maarten mens"
+            ]
+        },
+        {
+            "name": "Ducktape'",
+            "color": "yellow",
+            "members": [
+                "Karan Kohabir", 
+                "Iris Jansen", 
+                "Thymo Vlot", 
+                "Lina Wang", 
+                "Paula Goldebeld", 
+                "Hidde van de Rhee", 
+                "Joep van der Hagen", 
+                "Raymond Lagraauw", 
+                "Michael de Mooij"
+            ]
+        }
     ]
-        
 }
